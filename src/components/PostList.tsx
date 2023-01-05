@@ -4,21 +4,6 @@ import Map from './Map'
 
 const PostList = () => {
 
-  // 현재 위치 가져오기
-  const currentLoca = GetCurrentLocation()
-
-  // 위치 초기화
-  const [location, setLocation] = useState<any>(currentLoca)
-
-  // 현재 위치로 가는 함수
-  function goCurrentLoca(){
-    setLocation({
-      ...location,
-      lat: currentLoca.lat,
-      lng: currentLoca.lng
-    });
-  }
-
   // 충전소 정보 가져올 url 만들기
   const kepcoKey = process.env.REACT_APP_OPENAPI_KEPCO_API_KEY
   const [page, setPage] = useState<number>(1)
@@ -26,7 +11,7 @@ const PostList = () => {
   const [searchWord, setSearchWord] = useState<string>('');
 
   // 충전소 목록 변수에 넣어 출력 준비
-  const [potList, setPotList] = useState<any>()
+  const [potData, setPotData] = useState<any>()
 
   var url = '/api/EvInfoServiceV2/v1/getEvSearchList'
   url += "?serviceKey=" + kepcoKey
@@ -44,24 +29,12 @@ const PostList = () => {
   async function parsedList(){
     const parsedList = await getPotsList();
     console.log(parsedList.data);
-    setPotList(parsedList.data)
-  }
-
-  // 충전소 클릭 시 지도 옮기기
-  function goPotLoca(props:any){
-    console.log("goPotLoca: lat",props.lat);
-    console.log("goPotLoca: longi",props.longi);
-    
-    setLocation({
-      ...location,
-      lat: props.lat,
-      lng: props.longi
-    });
+    setPotData(parsedList.data)
   }
 
   return (
     <>
-      <Map props={location} />
+      <Map props={potData} />
       <input
         onChange={
           (e: React.ChangeEvent<HTMLInputElement>)=>{
@@ -85,30 +58,6 @@ const PostList = () => {
       >
         충전소 검색
       </button>
-      {potList ?
-        <div
-          style={{
-            position:"absolute",
-            bottom:"20px",
-            left:"20px",
-          }}
-        >
-          {potList.map((pot:any)=>(
-            <div
-              onClick={()=>goPotLoca(pot)}
-            >{pot.addr}</div>
-          ))}
-        </div>
-      :<></>
-      }
-      <button
-        onClick={()=>goCurrentLoca()}
-        style={{
-          position:"absolute",
-          bottom:"20px",
-          right:"20px",
-        }}
-      >다시 현재 위치로</button>
     </>
   )
 }
