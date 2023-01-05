@@ -42,10 +42,10 @@ const Map = (props:any) => {
         }
     }
 
+    let map: naver.maps.Map | undefined;
     function drawMap(props:any){
         console.log("draw",props);
         
-        let map: naver.maps.Map;
         const center: naver.maps.LatLng = new naver.maps.LatLng(props.lat, props.lng);
 
         map = new naver.maps.Map('map', {
@@ -59,17 +59,32 @@ const Map = (props:any) => {
             mapTypeControl: false,
             disableKineticPan: false
         });
+    }
 
-        const marker = new naver.maps.Marker({
-            position: new naver.maps.LatLng(props.lat,props.lng),
-            map:map
-        })
+    function marking(){
+        if (propsData){
+            console.log(propsData);
+            
+            for(var i=0, ii= propsData.length; i<ii; i++){
+                
+                const marker= new naver.maps.Marker({
+                    position:new naver.maps.LatLng(propsData[i].lat, propsData[i].longi),
+                    map:map
+                })
+            }
+
+            // const marker = new naver.maps.Marker({
+            //     position: new naver.maps.LatLng(props.lat,props.lng),
+            //     map:map
+            // })
+        }
     }
 
     useEffect(() => {
         checkLoca()
+        marking()
     
-    }, [location])
+    }, [location, propsData])
     
   return (
     <>
