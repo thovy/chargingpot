@@ -24,7 +24,7 @@ const Map = (props:any) => {
 
         map = new naver.maps.Map('map', {
             center: center,
-            zoom: 16,
+            zoom: 17,
             // 지도 컨트롤러 삭제
             scaleControl: false,
             logoControl: false,

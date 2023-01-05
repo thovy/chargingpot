@@ -47,6 +47,18 @@ const PostList = () => {
     setPotList(parsedList.data)
   }
 
+  // 충전소 클릭 시 지도 옮기기
+  function goPotLoca(props:any){
+    console.log("goPotLoca: lat",props.lat);
+    console.log("goPotLoca: longi",props.longi);
+    
+    setLocation({
+      ...location,
+      lat: props.lat,
+      lng: props.longi
+    });
+  }
+
   return (
     <>
       <Map props={location} />
@@ -82,7 +94,9 @@ const PostList = () => {
           }}
         >
           {potList.map((pot:any)=>(
-            <div>{pot.addr}</div>
+            <div
+              onClick={()=>goPotLoca(pot)}
+            >{pot.addr}</div>
           ))}
         </div>
       :<></>
