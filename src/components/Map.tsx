@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 
 const Map = (props:any) => {
 
@@ -24,14 +24,21 @@ const Map = (props:any) => {
 
         map = new naver.maps.Map('map', {
             center: center,
-            zoom: 16
+            zoom: 16,
+            // 지도 컨트롤러 삭제
+            scaleControl: false,
+            logoControl: false,
+            mapDataControl: false,
+            zoomControl: false,
+            mapTypeControl: false,
+            disableKineticPan: false
         });
     }
 
     useEffect(() => {
         checkLoca()
     
-    }, [props])
+    }, [propsLoca])
     
   return (
     <div id='map' style={{width:'100vw',height:'100vh'}}></div>
