@@ -1,121 +1,72 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import GetCurrentLocation from './GetCurrentLocation';
 
-const Map = (props:any) => {
+const Map = () => {
 
-    const propsData = props.props
-        
-    // 현재 위치 가져오기
-    const currentLoca = GetCurrentLocation()
+    var mapOptions:any;
+    var map:any;
 
-    // 위치 초기화
-    const [location, setLocation] = useState<any>(currentLoca)
+    
+    function initMap(){
 
-    // 현재 위치로 가는 함수
-    function goCurrentLoca(){
-        setLocation({
-        ...location,
-        lat: currentLoca.lat,
-        lng: currentLoca.lng
-        });
-    }
+        mapOptions={
+            center: null
+        }
 
-    // 충전소 클릭 시 지도 옮기기
-    function goPotLoca(props:any){
-        setLocation({
-        ...location,
-        lat: props.lat,
-        lng: props.longi
-        });
+        console.log("1");
+        mapOptions = {
+            center: new naver.maps.LatLng(37.3595714, 127.105399),
+            zoom: 16
+        };
+        console.log("2");
+        map = new naver.maps.Map('map', mapOptions);
+        console.log("3");
     }
     
-    // 좌표 확인
-    async function checkLoca(){
-        console.log("check",location);
-        if(location){
-            drawMap(location)
+    function currentLoca(){
+        var currentLoca:{lat:number, lng:number} = {lat: 37.483034,
+            lng: 126.902435
         }
-        else{
-            // 네이버 본사 좌표
-            drawMap({lat: 37.3595704, lng:127.105399})
-            console.log("좌표가 제대로 입력되지 않았습니다.");
-        }
-    }
-
-    let map: naver.maps.Map | undefined;
-    function drawMap(props:any){
-        console.log("draw",props);
-        
-        const center: naver.maps.LatLng = new naver.maps.LatLng(props.lat, props.lng);
-
-        map = new naver.maps.Map('map', {
-            center: center,
-            zoom: 17,
-            // 지도 컨트롤러 삭제
-            scaleControl: false,
-            logoControl: false,
-            mapDataControl: false,
-            zoomControl: false,
-            mapTypeControl: false,
-            disableKineticPan: false
-        });
-    }
-
-    function marking(){
-        if (propsData){
-            console.log(propsData);
-            
-            for(var i=0, ii= propsData.length; i<ii; i++){
-                
-                const marker= new naver.maps.Marker({
-                    position:new naver.maps.LatLng(propsData[i].lat, propsData[i].longi),
-                    map:map
-                })
+        if(navigator.geolocation){
+            navigator.geolocation.getCurrentPosition(success, error);
+          }
+    
+          function success(position:any){
+            currentLoca = {
+                lat:position.coords.latitude,
+                lng:position.coords.longitude
             }
-
-            // const marker = new naver.maps.Marker({
-            //     position: new naver.maps.LatLng(props.lat,props.lng),
-            //     map:map
-            // })
-        }
+          }
+    
+          function error(){
+            currentLoca = {
+              // 현재 위치의 좌표를 찾지 못하면
+              // 우리집 좌표로
+                lat: 37.483034,
+                lng: 126.902435
+            }
+            console.log("현재 위치 확인 실패, 위치 추적이 허용되어 있는지 확인해주세요.");
+          }
+        map.setCenter(new naver.maps.LatLng(currentLoca.lat, currentLoca.lng))
     }
 
     useEffect(() => {
-        checkLoca()
-        marking()
-    
-    }, [location, propsData])
-    
+      initMap()
+    }, [])
+
   return (
     <>
-        {/* 지도 틀 */}
-        <div id='map' style={{width:'100vw',height:'100vh'}}></div>
-        {/* 충전소 목록 출력 */}
-        {propsData ?
-        <div
-            style={{
-            position:"absolute",
-            bottom:"20px",
-            left:"20px",
-            }}
-        >
-            {propsData.map((pot:any)=>(
-            <div
-                onClick={()=>goPotLoca(pot)}
-            >{pot.addr}</div>
-            ))}
-        </div>
-        :<></>
-        }
-        {/* 현재 위치로 버튼 */}
+        <div id="map" style={{width:'100vw',height:'100vh'}}></div>
         <button
-        onClick={()=>goCurrentLoca()}
-        style={{
-            position:"absolute",
-            bottom:"20px",
-            right:"20px",
-        }}
-        >다시 현재 위치로</button>
+            onClick={()=>{
+                currentLoca()
+            }}
+            style={{
+                position:"absolute",
+                bottom:"20px",
+                right:"20px"
+            }}
+        >위치 이동</button>
     </>
   )
 }
