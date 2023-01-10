@@ -2,8 +2,9 @@ import React, { useEffect, useState, useMemo } from 'react';
 
 const Map = (props:any) => {
 
-    var mapOptions:any;
-    var map:any;
+    let mapOptions:any;
+    let map:any;
+    var marker:any;
     // 검색된 충전소 정보를 api 에서 받기
     const potData:any = props.data
     
@@ -12,17 +13,10 @@ const Map = (props:any) => {
             center: new naver.maps.LatLng(37.3595714, 127.105399),
             zoom: 16
         };
-        map = new naver.maps.Map('map', mapOptions);        
+        map = new naver.maps.Map('map', mapOptions);
     }
     
-    function currentLoca(){
-        // 이렇게 map 을 다시 정의해주지 않으면
-        // 다른 버튼을 누른 뒤에 현재 위치로 이동하는 버튼을 누르면 map 이 undefined 가 나옴
-        // 그런데 이렇게 새로 정의해주면 맵을 새로 그려서 새 지도를 setMap 으로 옮기는 거임
-        // 뭔가 정석적인 방법이 있어야되는데.
-        map = new naver.maps.Map('map')
-        console.log(map);
-        
+    function currentLoca(){        
         var currentLoca:{lat:number, lng:number} = {lat: 37.483034,
             lng: 126.902435
         }
@@ -50,20 +44,34 @@ const Map = (props:any) => {
     }
 
     function markingPots(){
-        var marker:any;
-        if(potData){
-            potData.map((data:any)=>(
+        // 검색어를 잘못입력한다던가 해서
+        // potData 가 존재하나 length 가 0이면
+        // map 이 그려지지 못하고 에러가 발생
+        if(potData && potData.length > 0){
+            // map 을 다시 그려주지 않으면
+            // map 이 undefined 가 나와서 다시 그려줘야함. 그냥 그릴 순 없으니 검색 시
+            // 목록 첫번째 항목의 위치로 가도록.
+            // map 이 왜 undefined 가 나올까?
+            map = new naver.maps.Map('map')
+            map.setCenter(new naver.maps.LatLng(potData[0].lat, potData[0].longi))
+                        
+            potData.map((data:any, index:number)=>{
                 marker = new naver.maps.Marker({
                     position:new naver.maps.LatLng(data.lat, data.longi),
                     map: map
                 })
-            ))
+            })
         }
     }
 
     useEffect(() => {
       initMap()
-    }, [map])
+    //   markingPots()
+    }, [])
+
+    useMemo(()=>{
+        markingPots()
+    },[potData])
 
   return (
     <>
@@ -107,11 +115,6 @@ const Map = (props:any) => {
                     // }}
                 >기다려주세요</div>
             }
-            <button
-                onClick={()=>markingPots()}
-            >
-                마커버튼
-            </button>
         </div>
     </>
   )
