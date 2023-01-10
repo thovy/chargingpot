@@ -2,22 +2,26 @@ import React, { useEffect, useState, useMemo } from 'react';
 
 const Map = (props:any) => {
 
-    let mapOptions:any;
     let map:any;
+    const mapOptions = {
+        zoom: 17,
+        scaleControl:false,
+        mapDataControl:false,
+        disableKineticPan:false,
+        tileTransition:false
+    };
     var marker:any;
     // 검색된 충전소 정보를 api 에서 받기
     const potData:any = props.data
-    
+
     function initMap(){
-        mapOptions = {
-            center: new naver.maps.LatLng(37.3595714, 127.105399),
-            zoom: 16
-        };
         map = new naver.maps.Map('map', mapOptions);
+        currentLoca()
     }
     
     function currentLoca(){        
-        var currentLoca:{lat:number, lng:number} = {lat: 37.483034,
+        var currentLoca:{lat:number, lng:number} = {
+            lat: 37.483034,
             lng: 126.902435
         }
         if(navigator.geolocation){
@@ -52,7 +56,7 @@ const Map = (props:any) => {
             // map 이 undefined 가 나와서 다시 그려줘야함. 그냥 그릴 순 없으니 검색 시
             // 목록 첫번째 항목의 위치로 가도록.
             // map 이 왜 undefined 가 나올까?
-            map = new naver.maps.Map('map')
+            initMap()
             map.setCenter(new naver.maps.LatLng(potData[0].lat, potData[0].longi))
                         
             potData.map((data:any, index:number)=>{
@@ -95,11 +99,15 @@ const Map = (props:any) => {
                     right:"20px"
                 }}
             >위치 이동</button>
+            <div>
+                목록 올리기 내리기
+            </div>
             {potData ?
                 <div
                     style={{
                         // bottom:"20px",
-                        left:"20px"
+                        left:"20px",
+
                     }}
                 >
                     {potData.map((data:any,index:number)=>(
@@ -114,10 +122,6 @@ const Map = (props:any) => {
                     ))}
                 </div>
                 :<div
-                    // style={{
-                    //     bottom:"20px",
-                    //     left:"20px"
-                    // }}
                 >기다려주세요</div>
             }
         </div>
