@@ -7,7 +7,7 @@ const PostList = () => {
   // 충전소 정보 가져올 url 만들기
   const kepcoKey = process.env.REACT_APP_OPENAPI_KEPCO_API_KEY
   const [page, setPage] = useState<number>(1)
-  const [perPage, setPerPage] = useState<number>(10)
+  const [perPage, setPerPage] = useState<number>(20)
   const [searchWord, setSearchWord] = useState<string>('');
 
   // 충전소 목록 변수에 넣어 출력 준비

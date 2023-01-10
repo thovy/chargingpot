@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
+import GetCurrentLocation from './GetCurrentLocation';
 
 const Map = (props:any) => {
 
@@ -58,7 +59,6 @@ const Map = (props:any) => {
             // map 이 왜 undefined 가 나올까?
             initMap()
             map.setCenter(new naver.maps.LatLng(potData[0].lat, potData[0].longi))
-                        
             potData.map((data:any, index:number)=>{
                 marker = new naver.maps.Marker({
                     position:new naver.maps.LatLng(data.lat, data.longi),
@@ -81,6 +81,8 @@ const Map = (props:any) => {
         markingPots()
     },[potData])
 
+    const [isListOpen, setIsListOpen] = useState<boolean>(false)
+
   return (
     <>
         <div id="map" style={{width:'100vw',height:'100vh'}}></div>
@@ -99,10 +101,19 @@ const Map = (props:any) => {
                     right:"20px"
                 }}
             >위치 이동</button>
-            <div>
-                목록 올리기 내리기
-            </div>
-            {potData ?
+            {isListOpen ?
+                <div
+                    onClick={()=>setIsListOpen(!isListOpen)}
+                >
+                닫기
+                </div>
+                :<div
+                    onClick={()=>setIsListOpen(!isListOpen)}
+                >
+                열기
+                </div>
+            }
+            {potData && isListOpen ?
                 <div
                     style={{
                         // bottom:"20px",
@@ -122,7 +133,7 @@ const Map = (props:any) => {
                     ))}
                 </div>
                 :<div
-                >기다려주세요</div>
+                >목록을열어보세요</div>
             }
         </div>
     </>
