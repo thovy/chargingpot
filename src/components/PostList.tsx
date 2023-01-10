@@ -34,7 +34,7 @@ const PostList = () => {
 
   return (
     <>
-      <Map />
+      <Map data={potData} />
       <input
         onChange={
           (e: React.ChangeEvent<HTMLInputElement>)=>{
