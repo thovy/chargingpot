@@ -64,6 +64,10 @@ const Map = (props:any) => {
         }
     }
 
+    function goPot(props:any){
+        map.setCenter(new naver.maps.LatLng(props.lat, props.longi))
+    }
+
     useEffect(() => {
       initMap()
     //   markingPots()
@@ -103,6 +107,7 @@ const Map = (props:any) => {
                             style={{
                                 position:"relative"
                             }}
+                            onClick={()=>goPot(data)}
                         >
                             {data.addr}
                         </div>
