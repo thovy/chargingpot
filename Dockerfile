@@ -6,7 +6,7 @@ ADD . /app
 
 RUN npm install
 
-RUN npm install -D @types/navermaps
+RUN npm install @types/navermaps
 
 RUN rm package-lock.json || true
 
