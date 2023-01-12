@@ -25,7 +25,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runners.os }}-buildx-${{ env.VERSION }}
+          key: ${{ runner.os }}-buildx-${{ env.VERSION }}
           restore-keys: |
             ${{ runner.os }}-buildx-
       - name: Login to ghcr
