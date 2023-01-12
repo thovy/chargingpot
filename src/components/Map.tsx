@@ -102,9 +102,9 @@ const Map = (props:any) => {
                 style={{
                     cursor:"pointer",
                     fontSize:"50px",
-                    display:"flex",
-                    justifyContent:"end",
-                    marginRight:"60px"
+                    // display:"flex",
+                    // justifyContent:"end",
+                    // marginRight:"60px"
                 }}
             >🧭</div>
             {isListOpen && potData?
