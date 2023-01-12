@@ -1,46 +1,47 @@
-# Getting Started with Create React App
+# **시작하며**
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 해당 주소로 접속하면 사용해볼수 있습니다.
+http://52.78.178.113:3000/
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## **설치**
 
-### `npm start`
+```
+npm install @types/navermap
+```
+를 이용해 naver maps 의 타입 정의를 할 필요가 있음.
+정의하지 않으면 지도가 그려지지 않음.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+---
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `npm test`
+## **목적**
+- 전기차 충전소의 위치를 검색하고,
+해당 충전소의 실시간 상태를 파악할 수 있도록 한다.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Naver Map API 의 사용법 익히기
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## **사용한 기술**
+- Naver Map API
+- 공공데이터 한전 충전소 실시간 정보(신) API
+- `TypeScript`, `React`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## **구현된 기능**
 
-### `npm run eject`
+### **CI/CD**
+- `Github Actions` 와 `AWS EC2` 를 이용한 무중단 배포
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### 기본적인 기능
+- 충전소 위치 검색 및 해당 위치에 마커로 표시
+- 충전소 위치, 실시간 상태가 포함된 목록 출력
+- 충전소 위치로 지도 이동
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 앞으로 업데이트 될 기능
+- 마커로 충전소의 실시간 상태표시(이미지를 사용하면 됨)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 앞으로 업데이트 안 될 기능
+- 삐뚤삐뚤한 CSS
