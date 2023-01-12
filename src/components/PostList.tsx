@@ -4,7 +4,7 @@ import Map from './Map'
 const PostList = () => {
 
   // 충전소 정보 가져올 url 만들기
-  const kepcoKey = oOtY7WWyc0r%2BWYXqOah0zUjW6ThBCpqt0CRhcu0QnytDMVgcTQ2XlLj%2FzRUKUGhYbyudzRrF7UxtRSkoZ8fnMw%3D%3D
+  const kepcoKey = "oOtY7WWyc0r%2BWYXqOah0zUjW6ThBCpqt0CRhcu0QnytDMVgcTQ2XlLj%2FzRUKUGhYbyudzRrF7UxtRSkoZ8fnMw%3D%3D"
   const [page, setPage] = useState<number>(1)
   // 최대갯수 3106개니까 3150개정도 검색되게 하면 되겠다
   const [perPage, setPerPage] = useState<number>(200)
