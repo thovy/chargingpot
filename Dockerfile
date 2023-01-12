@@ -6,6 +6,8 @@ ADD . /app
 
 RUN npm install
 
+RUN npm install -D @types/navermaps
+
 RUN rm package-lock.json || true
 
 ENV HOST 0.0.0.0
