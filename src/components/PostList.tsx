@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import GetCurrentLocation from './GetCurrentLocation'
+import React, { useMemo, useState } from 'react'
 import Map from './Map'
 
 const PostList = () => {
@@ -7,7 +6,8 @@ const PostList = () => {
   // 충전소 정보 가져올 url 만들기
   const kepcoKey = process.env.REACT_APP_OPENAPI_KEPCO_API_KEY
   const [page, setPage] = useState<number>(1)
-  const [perPage, setPerPage] = useState<number>(20)
+  // 최대갯수 3106개니까 3150개정도 검색되게 하면 되겠다
+  const [perPage, setPerPage] = useState<number>(200)
   const [searchWord, setSearchWord] = useState<string>('');
 
   // 충전소 목록 변수에 넣어 출력 준비
@@ -28,13 +28,15 @@ const PostList = () => {
   // 충전소 정보 파싱하기
   async function parsedList(){
     const parsedList = await getPotsList();
-    console.log(parsedList.data);
+    // console.log(parsedList.data);
     setPotData(parsedList.data)
   }
 
   return (
     <>
-      <Map data={potData} />
+      <Map
+        data={potData}
+      />
       <input
         onChange={
           (e: React.ChangeEvent<HTMLInputElement>)=>{
@@ -44,20 +46,28 @@ const PostList = () => {
         style={{
           position:"absolute",
           top:"20px",
-          left:"20px"
+          left:"1.3vw",
+          fontSize:"36px",
+          fontWeight:'bold',
+          width:"92.5vw",
+          borderRadius:"20px",
+          border:"lightgray 1px solid",
+          padding:"7px 0px 7px 20px"
         }}
-      >
-      </input>
-      <button
+      />
+      <div
         onClick={()=>parsedList()}
         style={{
+          cursor:"pointer",
           position:"absolute",
-          top:"20px",
-          right:"20px"
+          top:"18px",
+          right:"2.3vw",
+          fontSize:"40px",
+          // backgroundColor:"white"
         }}
       >
-        충전소 검색
-      </button>
+        🔍
+      </div>
     </>
   )
 }

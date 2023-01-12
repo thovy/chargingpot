@@ -5,7 +5,7 @@ const Map = (props:any) => {
 
     let map:any;
     const mapOptions = {
-        zoom: 17,
+        zoom: 18,
         scaleControl:false,
         mapDataControl:false,
         disableKineticPan:false,
@@ -62,7 +62,7 @@ const Map = (props:any) => {
             potData.map((data:any, index:number)=>{
                 marker = new naver.maps.Marker({
                     position:new naver.maps.LatLng(data.lat, data.longi),
-                    map: map
+                    map: map,
                 })
             })
         }
@@ -81,7 +81,7 @@ const Map = (props:any) => {
         markingPots()
     },[potData])
 
-    const [isListOpen, setIsListOpen] = useState<boolean>(false)
+    const [isListOpen, setIsListOpen] = useState<boolean>(true)
 
   return (
     <>
@@ -89,52 +89,127 @@ const Map = (props:any) => {
         <div
             style={{
                 position:"absolute",
-                bottom:"20px"
+                bottom:"0px",
+                left:"4vw",
             }}
         >
-            <button
+            <div
+            >
+            <div
                 onClick={()=>{
                     currentLoca()
                 }}
                 style={{
-                    // bottom:"20px",
-                    right:"20px"
+                    cursor:"pointer",
+                    fontSize:"50px",
+                    display:"flex",
+                    justifyContent:"end"
                 }}
-            >위치 이동</button>
-            {isListOpen ?
+            >🧭</div>
+            {isListOpen && potData?
                 <div
                     onClick={()=>setIsListOpen(!isListOpen)}
+                    style={{ fontSize:"25px", cursor:"pointer"}}
                 >
-                닫기
+                🔽
                 </div>
                 :<div
                     onClick={()=>setIsListOpen(!isListOpen)}
+                    style={{ fontSize:"25px", cursor:"pointer"}}
                 >
-                열기
+                🔼
                 </div>
             }
             {potData && isListOpen ?
                 <div
                     style={{
-                        // bottom:"20px",
-                        left:"20px",
-
+                        maxHeight:"40vh",
+                        overflow:"auto",
+                        width:"90vw",
+                        maxWidth:"700px",
+                        backgroundColor:"white",
+                        borderRadius:"20px",
                     }}
                 >
                     {potData.map((data:any,index:number)=>(
-                        <div
+                        <div id='potContainer'
                             style={{
-                                position:"relative"
+                                cursor:"pointer",
+                                display:"flex",
+                                margin:"7px",
+                                backgroundColor:"white",
+                                borderBottom:"2px solid black"
                             }}
+                            
                             onClick={()=>goPot(data)}
                         >
-                            {data.addr}
+                            <div
+                                style={{
+                                    width:"80px",
+                                    paddingRight:"4px",
+                                    borderRight:"1px solid gray",
+                                    display:"flex",
+                                    justifyContent:"end"
+                                }}
+                            >
+                                {data.cpStat == "1" ?
+                                <div>충전가능💚</div>
+                                :data.cpStat == "2"?
+                                <div>충전중💙</div>
+                                :data.cpStat == "3"?
+                                <div>고장🖤</div>
+                                :data.cpStat == "4"?
+                                <div>통신장애💔</div>
+                                :<div>통신미연결💔</div>
+                                }
+                            </div>
+                            <div
+                                id='addrContainer'
+                                style={{
+                                    display:'inline',
+                                    paddingLeft:"5px"
+                                }}
+                            >
+                                <div
+                                    id='callName'
+                                    style={{
+                                        fontSize:"15px",
+                                        fontWeight:"bold",
+                                        display:"flex"
+                                    }}
+                                >
+                                    {data.csNm}
+                                </div>
+                                <div
+                                    id="addr"
+                                    style={{
+                                        position:"relative",
+                                        color:"gray",
+                                        display:"flex"
+                                    }}
+                                >
+                                    {data.addr}
+                                </div>
+                            </div>
                         </div>
                     ))}
                 </div>
                 :<div
-                >목록을열어보세요</div>
+                    style={{
+                        bottom:"0px",
+                        // left:"20px",
+                        maxHeight:"40vh",
+                        overflow:"auto",
+                        width:"100vw",
+                        backgroundColor:"white",
+                        fontSize:"15px",
+                        fontWeight:"bold",
+                        padding:"10px 0px 10px 0px",
+
+                    }}
+                >목록을 열어보세요</div>
             }
+            </div>
         </div>
     </>
   )
