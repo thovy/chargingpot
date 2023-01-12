@@ -103,7 +103,8 @@ const Map = (props:any) => {
                     cursor:"pointer",
                     fontSize:"50px",
                     display:"flex",
-                    justifyContent:"end"
+                    justifyContent:"end",
+                    marginRight:"60px"
                 }}
             >🧭</div>
             {isListOpen && potData?
