@@ -102,7 +102,7 @@ const Map = (props:any) => {
                 style={{
                     cursor:"pointer",
                     fontSize:"50px",
-                    // display:"flex",
+                    display:"flex",
                     // justifyContent:"end",
                     // marginRight:"60px"
                 }}
