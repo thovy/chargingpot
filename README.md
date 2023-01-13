@@ -1,5 +1,10 @@
 # **시작하며**
 
+## 시연
+
+<img src="https://user-images.githubusercontent.com/98632452/212237489-59e698df-a495-4af3-ad1d-c25b34ab0b9b.gif">
+
+
 ## 해당 주소로 접속하면 사용해볼수 있습니다.
 http://52.78.178.113:3000/
 
